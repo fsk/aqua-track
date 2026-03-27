@@ -17,9 +17,9 @@
   /** @type {{ showerFlowLitersPerMinute: number, flowNote?: string, ideas: Array<{ litersPerUnit: number, singular: string, plural: string }> } | null} */
   let config = null;
 
-  /** Aktif segment başlangıcı (duvardaki saat) */
+  /** Wall-clock start of the current running segment */
   let runStartAt = null;
-  /** Duraklatılmış toplam süre */
+  /** Accumulated time when not running */
   let storedMs = 0;
   let running = false;
   let rafId = null;
@@ -42,9 +42,9 @@
     const m = Math.floor((s % 3600) / 60);
     const sec = s % 60;
     const parts = [];
-    if (h > 0) parts.push(`${h} sa`);
-    if (m > 0) parts.push(`${m} dk`);
-    if (sec > 0 || parts.length === 0) parts.push(`${sec} sn`);
+    if (h > 0) parts.push(`${h} h`);
+    if (m > 0) parts.push(`${m} min`);
+    if (sec > 0 || parts.length === 0) parts.push(`${sec} s`);
     return parts.join(" ");
   }
 
@@ -113,14 +113,30 @@
       }
 
       const li = document.createElement("li");
-      li.textContent = text;
+      const mainRow = document.createElement("div");
+      mainRow.className = "idea-main";
+      mainRow.textContent = text;
+      li.appendChild(mainRow);
+
+      const details = item.details;
+      if (Array.isArray(details) && details.length > 0) {
+        const sub = document.createElement("ul");
+        sub.className = "idea-sublist";
+        for (let i = 0; i < details.length; i++) {
+          const subLi = document.createElement("li");
+          subLi.textContent = replaceN(details[i], n);
+          sub.appendChild(subLi);
+        }
+        li.appendChild(sub);
+      }
+
       els.ideaList.appendChild(li);
     }
 
     if (els.ideaList.children.length === 0) {
       const li = document.createElement("li");
       li.textContent =
-        "Süre çok kısa; anlamlı bir karşılaştırma için biraz daha uzun bir ölçüm yapın veya js/alternatives-data.js içindeki «litersPerUnit» değerlerini küçültün.";
+        "The run was very short—try a longer shower timer, or lower some «litersPerUnit» values in js/alternatives-data.js for more comparisons.";
       els.ideaList.appendChild(li);
     }
   }
@@ -133,7 +149,7 @@
     els.flowNote.textContent = config.flowNote || "";
     els.summaryDuration.textContent = formatDurationHuman(ms);
     els.summaryLiters.textContent =
-      L >= 100 ? `${L.toFixed(1)} litre` : L >= 1 ? `${L.toFixed(2)} litre` : `${(L * 1000).toFixed(0)} ml (≈${L.toFixed(3)} L)`;
+      L >= 100 ? `${L.toFixed(1)} L` : L >= 1 ? `${L.toFixed(2)} L` : `${(L * 1000).toFixed(0)} ml (≈${L.toFixed(3)} L)`;
 
     buildIdeasList(L, config.ideas);
     els.results.classList.add("is-visible");
@@ -192,7 +208,7 @@
     if (!data || typeof data.showerFlowLitersPerMinute !== "number" || !Array.isArray(data.ideas)) {
       config = null;
       showError(
-        "Karşılaştırma verisi bulunamadı. index.html içinde js/alternatives-data.js betiğinin js/app.js’ten önce yüklendiğinden emin olun."
+        "Comparison data not found. In index.html, load js/alternatives-data.js before js/app.js."
       );
       els.btnStart.disabled = true;
       els.btnStop.disabled = true;

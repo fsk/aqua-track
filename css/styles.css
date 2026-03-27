@@ -1,12 +1,17 @@
-/* Duş suyu farkındalığı — responsive */
+/* Shower water awareness — responsive layout */
 :root {
-  --bg: #0c1222;
-  --surface: #151d32;
-  --surface-hover: #1c2640;
+  --bg: #bfe8f5;
+  --text-page: #0d3a52;
+  --muted-page: #3d5c72;
+  --surface: #0f3050;
+  --surface-hover: #134060;
   --text: #e8ecf4;
   --muted: #94a3b8;
   --accent: #38bdf8;
-  --accent-dim: #0284c7;
+  --accent-dim: #1d7cac;
+  --stop-pink: #f472b8;
+  --stop-pink-hover: #ec4899;
+  --stop-text: #2a141f;
   --success: #34d399;
   --danger: #f87171;
   --radius: 16px;
@@ -28,9 +33,59 @@ body {
   margin: 0;
   min-height: 100dvh;
   font-family: var(--font);
-  background: radial-gradient(ellipse 120% 80% at 50% -20%, #1e3a5f 0%, var(--bg) 55%);
-  color: var(--text);
+  color: var(--text-page);
   line-height: 1.55;
+  background-color: var(--bg);
+  position: relative;
+  isolation: isolate;
+  overflow-x: clip;
+}
+
+/* Light watery sky — soft aqua / open blue */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+  pointer-events: none;
+  background: linear-gradient(
+    185deg,
+    #dff6fc 0%,
+    #c5ebf7 28%,
+    #a8dff2 55%,
+    #8fd4ed 78%,
+    #7dc8e8 100%
+  );
+}
+
+/* Single teardrop grid — spaced out, moves down in a seamless loop */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  opacity: 0.62;
+  background-image: radial-gradient(
+    ellipse 28% 44% at 50% 36%,
+    rgba(14, 116, 144, 0.5) 0%,
+    rgba(8, 145, 178, 0.32) 13%,
+    rgba(12, 100, 130, 0.2) 28%,
+    transparent 54%
+  );
+  background-size: 80px 110px;
+  background-position: 0 0;
+  background-repeat: repeat;
+  animation: droplets-fall 2.6s linear infinite;
+}
+
+@keyframes droplets-fall {
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: 0 110px;
+  }
 }
 
 .skip-link {
@@ -39,7 +94,7 @@ body {
   top: 0;
   padding: 0.75rem 1rem;
   background: var(--accent);
-  color: var(--bg);
+  color: var(--text-page);
   z-index: 100;
 }
 
@@ -63,7 +118,7 @@ body {
 .app-header p {
   margin: 0 auto;
   max-width: 36rem;
-  color: var(--muted);
+  color: var(--muted-page);
   font-size: clamp(0.9rem, 2.5vw, 1rem);
 }
 
@@ -76,6 +131,7 @@ main {
 
 .card {
   background: var(--surface);
+  color: var(--text);
   border-radius: var(--radius);
   padding: clamp(1.25rem, 4vw, 1.75rem);
   margin-bottom: 1.25rem;
@@ -143,12 +199,14 @@ button:disabled {
 }
 
 .btn-stop {
-  background: linear-gradient(135deg, #fb923c 0%, #ea580c 100%);
-  color: #1c0a00;
+  background-color: var(--stop-pink);
+  color: var(--stop-text);
+  box-shadow: 0 4px 22px rgba(244, 114, 182, 0.4);
 }
 
 .btn-stop:hover:not(:disabled) {
-  filter: brightness(1.06);
+  background-color: var(--stop-pink-hover);
+  filter: none;
 }
 
 .btn-secondary {
@@ -228,19 +286,19 @@ button:disabled {
   padding: 0;
 }
 
-.idea-list li {
+.idea-list > li {
   position: relative;
   padding: 0.75rem 0 0.75rem 1.75rem;
   border-bottom: 1px solid rgba(148, 163, 184, 0.12);
   font-size: 0.95rem;
 }
 
-.idea-list li:last-child {
+.idea-list > li:last-child {
   border-bottom: none;
   padding-bottom: 0;
 }
 
-.idea-list li::before {
+.idea-list > li::before {
   content: "";
   position: absolute;
   left: 0.25rem;
@@ -252,11 +310,36 @@ button:disabled {
   box-shadow: 0 0 10px var(--accent);
 }
 
+.idea-main {
+  display: block;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.idea-sublist {
+  list-style: disc;
+  margin: 0.6rem 0 0;
+  padding: 0 0 0 1.2rem;
+  color: var(--muted);
+  font-size: 0.875rem;
+  line-height: 1.5;
+}
+
+.idea-sublist li {
+  position: relative;
+  padding: 0.2rem 0;
+  border: none;
+}
+
+.idea-sublist li::before {
+  display: none;
+}
+
 .error-banner {
   display: none;
-  background: rgba(248, 113, 113, 0.15);
-  border: 1px solid rgba(248, 113, 113, 0.4);
-  color: #fecaca;
+  background: rgba(254, 202, 202, 0.55);
+  border: 1px solid rgba(220, 38, 38, 0.35);
+  color: #7f1d1d;
   padding: 0.75rem 1rem;
   border-radius: 12px;
   margin-bottom: 1rem;
@@ -271,7 +354,7 @@ button:disabled {
   text-align: center;
   padding: 1.5rem 1rem 2rem;
   font-size: 0.8rem;
-  color: var(--muted);
+  color: var(--muted-page);
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -283,5 +366,10 @@ button:disabled {
 
   button:active:not(:disabled) {
     transform: none;
+  }
+
+  body::after {
+    animation: none !important;
+    background-position: 0 0;
   }
 }

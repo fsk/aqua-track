@@ -1,22 +1,25 @@
 <!DOCTYPE html>
-<html lang="tr">
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="description" content="Duş sürenizi ölçün; harcadığınız su miktarı ve alternatif kullanımlar hakkında farkındalık kazanın." />
-    <title>Duşta Su Farkındalığı</title>
+    <meta
+      name="description"
+      content="Time your shower; see estimated water use and what else that water could have been used for."
+    />
+    <title>Shower Water Awareness</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,600;0,9..40,700;1,9..40,400&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="css/styles.css" />
   </head>
   <body>
-    <a class="skip-link" href="#main">İçeriğe atla</a>
+    <a class="skip-link" href="#main">Skip to content</a>
     <header class="app-header">
-      <h1>Duşta ne kadar su?</h1>
+      <h1>How much water are you using in the shower?</h1>
       <p>
-        Duşa girmeden önce kronometreyi başlatın, çıktıktan sonra durdurun. Geçen süreye göre tahmini su kullanımınız ve bu suyla neler
-        yapılabileceği listelenir.
+        Start the timer before you get in, stop it when you step out. You’ll see an estimate of how much water that took and what else that
+        amount could have done.
       </p>
     </header>
 
@@ -24,36 +27,36 @@
       <div id="load-error" class="error-banner" role="alert"></div>
 
       <section class="card" aria-labelledby="timer-heading">
-        <h2 id="timer-heading">Kronometre</h2>
+        <h2 id="timer-heading">Timer</h2>
         <div id="timer" class="timer-display" aria-live="polite">00:00:00</div>
         <div class="button-row">
-          <button type="button" id="btn-start" class="btn-primary">Başlat</button>
-          <button type="button" id="btn-stop" class="btn-stop" disabled>Durdur</button>
-          <button type="button" id="btn-reset" class="btn-secondary">Sıfırla</button>
+          <button type="button" id="btn-start" class="btn-primary">Start</button>
+          <button type="button" id="btn-stop" class="btn-stop" disabled>Stop</button>
+          <button type="button" id="btn-reset" class="btn-secondary">Reset</button>
         </div>
-        <p class="hint">Duş öncesi «Başlat», duş sonrası «Durdur». İsterseniz «Sıfırla» ile yeniden başlayın.</p>
+        <p class="hint">Use Start before your shower and Stop after. Reset clears the timer for a new run.</p>
       </section>
 
       <section id="results" class="card results" aria-labelledby="results-heading">
-        <h2 id="results-heading">Sonuç</h2>
+        <h2 id="results-heading">Results</h2>
         <p id="flow-note" class="flow-note"></p>
         <div class="summary-grid">
           <div class="stat">
-            <span class="label">Süre</span>
+            <span class="label">Duration</span>
             <span id="summary-duration" class="value">—</span>
           </div>
           <div class="stat">
-            <span class="label">Tahmini su</span>
+            <span class="label">Est. water</span>
             <span id="summary-liters" class="value">—</span>
           </div>
         </div>
-        <h2 id="ideas-heading" class="ideas-heading">Bu suyla neler yapılabilirdi?</h2>
+        <h2 id="ideas-heading" class="ideas-heading">What else could this water have done?</h2>
         <ul id="idea-list" class="idea-list" aria-labelledby="ideas-heading"></ul>
       </section>
     </main>
 
     <footer class="app-footer">
-      Tahminler ortalama değerlerdir; amaç bilinçli kullanım ve tasarruf farkındalığıdır.
+      Figures are rough averages—the goal is awareness and mindful use, not exact measurement.
     </footer>
 
     <script src="js/alternatives-data.js"></script>
