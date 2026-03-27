@@ -110,7 +110,7 @@ body::after {
 
 .app-header h1 {
   margin: 0 0 0.5rem;
-  font-size: clamp(1.35rem, 4vw, 1.85rem);
+  font-size: clamp(1.65rem, 5.25vw, 2.35rem);
   font-weight: 700;
   letter-spacing: -0.02em;
 }
@@ -148,9 +148,15 @@ main {
   letter-spacing: 0.06em;
 }
 
+#timer-heading {
+  text-align: center;
+  color: var(--stop-pink);
+  font-size: clamp(1.25rem, 3.2vw, 1.55rem);
+}
+
 .timer-display {
   font-variant-numeric: tabular-nums;
-  font-size: clamp(2.5rem, 10vw, 3.75rem);
+  font-size: clamp(2.65rem, 10.5vw, 3.9rem);
   font-weight: 700;
   text-align: center;
   letter-spacing: 0.04em;
